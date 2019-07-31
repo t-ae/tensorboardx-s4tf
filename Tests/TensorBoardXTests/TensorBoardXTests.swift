@@ -9,7 +9,13 @@ final class TensorBoardXTests: XCTestCase {
         let writer = SummaryWriter(directory: "/tmp/tensorboardx")
         
         for i in 0..<100 {
-            writer.addScalar(tag: "data/scalar1", scalar: Float(i), globalStep: i)
+            writer.addScalar(tag: "scalar/scalar", scalar: Float(i), globalStep: i)
+        }
+        
+        for i in 0..<100 {
+            let sin = sinf(Float(i) / 30)
+            let cos = cosf(Float(i) / 30)
+            writer.addScalars(tag: "scalar/scalars", scalars: ["sin": sin, "cos": cos], globalStep: i)
         }
         
         for i in 0..<3 {
