@@ -19,3 +19,13 @@ To verify installation, clone this repository and run the commands below.
 $ swift run TestPlot
 $ tensorboard --logdir /tmp/tensorboardx
 ```
+
+### SwiftPM
+
+Add this to package's dependencies.
+
+```
+.package(url: "https://github.com/t-ae/tensorboardx-s4tf.git", from: "0.0.2"),
+```
+
+And add `"TensorBoardX"` for target's dependencies.
