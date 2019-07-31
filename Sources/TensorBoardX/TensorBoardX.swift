@@ -11,8 +11,8 @@ func nparray(_ tensor: Tensor<Float>) -> PythonObject {
 public class SummaryWriter {
     var writer: PythonObject
     
-    public init(directory: String) {
-        self.writer = tbx.SummaryWriter(directory)
+    public init(logdir: String, flushSecs: Int = 120) {
+        self.writer = tbx.SummaryWriter(logdir, flush_secs: flushSecs)
     }
 }
 
@@ -51,6 +51,11 @@ extension SummaryWriter {
     /// Add histogram to summary.
     public func addHistogram(tag: String, values: Tensor<Float>, globalSteps: Int) {
         writer.add_histogram(tag, nparray(values), globalSteps)
+    }
+    
+    /// Flush.
+    public func flush() {
+        writer.flush()
     }
     
     /// Close.
