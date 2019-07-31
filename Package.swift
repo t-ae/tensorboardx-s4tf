@@ -10,6 +10,9 @@ let package = Package(
         .library(
             name: "TensorBoardX",
             targets: ["TensorBoardX"]),
+        .executable(
+            name: "TensorBoardX-TestPlot",
+            targets: ["TensorBoardX-TestPlot"])
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
@@ -21,6 +24,9 @@ let package = Package(
         .target(
             name: "TensorBoardX",
             dependencies: []),
+        .target(
+            name: "TensorBoardX-TestPlot",
+            dependencies: ["TensorBoardX"]),
         .testTarget(
             name: "TensorBoardXTests",
             dependencies: ["TensorBoardX"]),
