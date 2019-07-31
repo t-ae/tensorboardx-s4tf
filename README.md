@@ -13,6 +13,6 @@ $ pip install tensorboard tensorboardX Pillow
 To verify installation, run the commands below.
 
 ```bash
-$ swift run TensorBoardX-TestPlot
+$ swift run TestPlot
 $ tensorboard --logdir /tmp/tensorboardx
 ```

@@ -11,8 +11,8 @@ let package = Package(
             name: "TensorBoardX",
             targets: ["TensorBoardX"]),
         .executable(
-            name: "TensorBoardX-TestPlot",
-            targets: ["TensorBoardX-TestPlot"])
+            name: "TestPlot",
+            targets: ["TestPlot"])
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
@@ -25,7 +25,7 @@ let package = Package(
             name: "TensorBoardX",
             dependencies: []),
         .target(
-            name: "TensorBoardX-TestPlot",
+            name: "TestPlot",
             dependencies: ["TensorBoardX"]),
         .testTarget(
             name: "TensorBoardXTests",
