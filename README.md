@@ -4,13 +4,16 @@
 
 ## Install
 
-First you need Python libraries.
+### Requirements
+
+- [Swift for TensorFlow toolchain](https://github.com/tensorflow/swift/blob/master/Installation.md)
+- Python libraries
 
 ```bash
 $ pip install tensorboard tensorboardX Pillow
 ```
 
-To verify installation, run the commands below.
+To verify installation, clone this repository and run the commands below.
 
 ```bash
 $ swift run TestPlot
