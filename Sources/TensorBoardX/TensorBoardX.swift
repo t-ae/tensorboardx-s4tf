@@ -35,6 +35,14 @@ extension SummaryWriter {
         writer.add_images(tag, nparray(images), globalStep, dataformats: dataformats)
     }
     
+    public func addText(tag: String, text: String, globalSteps: Int) {
+        writer.add_text(tag, text, globalSteps)
+    }
+    
+    public func addHistogram(tag: String, values: Tensor<Float>, globalSteps: Int) {
+        writer.add_histogram(tag, nparray(values), globalSteps)
+    }
+    
     public func close() {
         writer.close()
     }

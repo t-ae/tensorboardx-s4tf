@@ -22,6 +22,15 @@ final class TensorBoardXTests: XCTestCase {
             writer.addImages(tag: "images", images: images, globalStep: i)
         }
         
+        for i in 0..<3 {
+            let hist = Tensor<Float>(randomNormal: [1024])
+            writer.addHistogram(tag: "hist", values: hist, globalSteps: i)
+        }
+        
+        for i in 0..<3 {
+            writer.addText(tag: "text", text: "step: \(i)", globalSteps: i)
+        }
+        
         writer.close()
     }
 
