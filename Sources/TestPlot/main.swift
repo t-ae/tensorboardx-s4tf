@@ -28,11 +28,17 @@ for i in 0..<3 {
 
 for i in 0..<3 {
     let hist = Tensor<Float>(randomNormal: [1024])
-    writer.addHistogram(tag: "hist", values: hist, globalSteps: i)
+    writer.addHistogram(tag: "hist", values: hist, globalStep: i)
 }
 
 for i in 0..<3 {
-    writer.addText(tag: "text", text: "step: \(i)", globalSteps: i)
+    writer.addText(tag: "text", text: "step: \(i)", globalStep: i)
 }
+
+let data = Tensor<Float>(randomNormal: [100, 10])
+let labels = (0..<100).map { _ in String(Int.random(in: 0..<10)) }
+//let labelImages = Tensor<Float>(randomNormal: [100, 3, 32, 32])
+
+writer.addEmbedding(tag: "embed", matrix: data, labels: labels, globalStep: 0)
 
 writer.close()

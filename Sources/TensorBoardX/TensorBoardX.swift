@@ -64,13 +64,44 @@ extension SummaryWriter {
     }
     
     /// Add text to summary.
-    public func addText(tag: String, text: String, globalSteps: Int) {
-        writer.add_text(tag, text, globalSteps)
+    public func addText(tag: String, text: String, globalStep: Int) {
+        writer.add_text(tag, text, globalStep)
     }
     
     /// Add histogram to summary.
-    public func addHistogram(tag: String, values: Tensor<Float>, globalSteps: Int) {
-        writer.add_histogram(tag, nparray(values), globalSteps)
+    public func addHistogram(tag: String, values: Tensor<Float>, globalStep: Int) {
+        writer.add_histogram(tag, nparray(values), globalStep)
+    }
+    
+    /// Add embedding.
+    /// - Parameters:
+    ///   - matrix: N x D matrix, N features of D dimension.
+    ///   - labels: Labels for each sample.
+    public func addEmbedding(tag: String = "default",
+                             matrix: Tensor<Float>,
+                             labels: [String],
+                             globalStep: Int) {
+        writer.add_embedding(mat: nparray(matrix),
+                             metadata: labels,
+                             global_step: globalStep,
+                             tag: tag)
+    }
+    
+    /// Add embedding.
+    /// - Parameters:
+    ///   - matrix: N x D matrix, N features of D dimension.
+    ///   - labels: Labels for each sample.
+    // Currently unavailable since label_img is PyTorch tensor only.
+    private func addEmbedding(tag: String = "default",
+                             matrix: Tensor<Float>,
+                             labels: [String],
+                             labelImages: Tensor<Float>,
+                             globalStep: Int) {
+        writer.add_embedding(mat: nparray(matrix),
+                             metadata: labels,
+                             label_img: nparray(labelImages),
+                             global_step: globalStep,
+                             tag: tag)
     }
     
     /// Flush.
