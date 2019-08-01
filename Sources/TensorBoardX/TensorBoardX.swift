@@ -25,8 +25,8 @@ public enum ImageDataFormat {
 public class SummaryWriter {
     var writer: PythonObject
     
-    public init(logdir: String, flushSecs: Int = 120) {
-        self.writer = tbx.SummaryWriter(logdir, flush_secs: flushSecs)
+    public init(logdir: URL, flushSecs: Int = 120) {
+        self.writer = tbx.SummaryWriter(logdir.path, flush_secs: flushSecs)
     }
     
     /// Flush.

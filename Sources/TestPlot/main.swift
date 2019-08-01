@@ -2,9 +2,11 @@ import Foundation
 import TensorFlow
 import TensorBoardX
 
-try? FileManager.default.removeItem(atPath: "/tmp/tensorboardx")
+let logdir = URL(fileURLWithPath: "/tmp/tensorboardx")
 
-let writer = SummaryWriter(logdir: "/tmp/tensorboardx")
+try? FileManager.default.removeItem(at: logdir)
+
+let writer = SummaryWriter(logdir: logdir)
 
 for i in 0..<100 {
     writer.addScalar(tag: "scalar/scalar", scalar: Double(i), globalStep: i, date: Date(timeIntervalSince1970: Double(i)))
