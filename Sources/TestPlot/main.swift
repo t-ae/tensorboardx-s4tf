@@ -7,7 +7,7 @@ try? FileManager.default.removeItem(atPath: "/tmp/tensorboardx")
 let writer = SummaryWriter(logdir: "/tmp/tensorboardx")
 
 for i in 0..<100 {
-    writer.addScalar(tag: "scalar/scalar", scalar: Float(i), globalStep: i)
+    writer.addScalar(tag: "scalar/scalar", scalar: Float(i), globalStep: i, date: Date(timeIntervalSince1970: Double(i)))
 }
 
 for i in 0..<100 {

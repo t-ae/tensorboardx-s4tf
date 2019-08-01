@@ -1,3 +1,4 @@
+import Foundation
 import TensorFlow
 import Python
 
@@ -39,17 +40,33 @@ public class SummaryWriter {
     }
 }
 
+extension Date {
+    var walltime: Float {
+        return Float(timeIntervalSince1970)
+    }
+}
+
 extension SummaryWriter {
     /// Add scalar to summary.
-    public func addScalar(tag: String, scalar: Float, globalStep: Int? = nil) {
-        writer.add_scalar(tag, scalar, globalStep)
+    public func addScalar(tag: String,
+                          scalar: Float,
+                          globalStep: Int? = nil,
+                          date: Date? = nil) {
+        writer.add_scalar(tag: tag,
+                          scalar_value: scalar,
+                          global_step: globalStep,
+                          walltime: date?.walltime)
     }
     
     /// Add scalars to summary.
     public func addScalars(mainTag: String,
                            taggedScalars: [String: Float],
-                           globalStep: Int? = nil) {
-        writer.add_scalars(mainTag, taggedScalars, globalStep)
+                           globalStep: Int? = nil,
+                           date: Date? = nil) {
+        writer.add_scalars(main_tag: mainTag,
+                           tag_scalar_dict: taggedScalars,
+                           global_step: globalStep,
+                           walltime: date?.walltime)
     }
     
     /// Add image to summary.
@@ -59,6 +76,7 @@ extension SummaryWriter {
     public func addImage(tag: String,
                          image: Tensor<Float>,
                          globalStep: Int? = nil,
+                         date: Date? = nil,
                          dataformats: ImageDataFormat = .channelsLast) {
         precondition(image.shape.count == 3, "Invalid `images` shape.")
         switch dataformats {
@@ -69,7 +87,11 @@ extension SummaryWriter {
             precondition([0, 3, 4].contains(image.shape[2]), "Invalid `image` shape.")
             precondition(image.shape[0] > 0 && image.shape[1] > 0, "Invalid `image` shape.")
         }
-        writer.add_image(tag, nparray(image), globalStep, dataformats: dataformats.stringValue)
+        writer.add_image(tag: tag,
+                         img_tensor: nparray(image),
+                         global_step: globalStep,
+                         walltime: date?.walltime,
+                         dataformats: dataformats.stringValue)
     }
     
     /// Add images to summary
@@ -79,6 +101,7 @@ extension SummaryWriter {
     public func addImages(tag: String,
                           images: Tensor<Float>,
                           globalStep: Int? = nil,
+                          date: Date? = nil,
                           dataformats: ImageDataFormat = .channelsLast) {
         precondition(images.shape.count == 4, "Invalid `images` shape.")
         precondition(images.shape[0] > 0, "`images` contains no images.")
@@ -91,17 +114,33 @@ extension SummaryWriter {
             precondition(images.shape[1] > 0 && images.shape[2] > 0, "Invalid `image` shape.")
         }
         let dataformats = "N" + dataformats.stringValue
-        writer.add_images(tag, nparray(images), globalStep, dataformats: dataformats)
+        writer.add_images(tag: tag,
+                          img_tensor: nparray(images),
+                          global_step: globalStep,
+                          walltime: date?.walltime,
+                          dataformats: dataformats)
     }
     
     /// Add text to summary.
-    public func addText(tag: String, text: String, globalStep: Int? = nil) {
-        writer.add_text(tag, text, globalStep)
+    public func addText(tag: String,
+                        text: String,
+                        globalStep: Int? = nil,
+                        date: Date? = nil) {
+        writer.add_text(tag: tag,
+                        text_string: text,
+                        global_step: globalStep,
+                        walltime: date?.walltime)
     }
     
     /// Add histogram to summary.
-    public func addHistogram(tag: String, values: Tensor<Float>, globalStep: Int? = nil) {
-        writer.add_histogram(tag, nparray(values), globalStep)
+    public func addHistogram(tag: String,
+                             values: Tensor<Float>,
+                             globalStep: Int? = nil,
+                             date: Date? = nil) {
+        writer.add_histogram(tag: tag,
+                             values: nparray(values),
+                             global_step: globalStep,
+                             walltime: date?.walltime)
     }
     
     /// Add embedding.
