@@ -5,7 +5,7 @@ import Python
 let np = Python.import("numpy")
 let tbx = Python.import("tensorboardX")
 
-func nparray(_ tensor: Tensor<Float>) -> PythonObject {
+func nparray<T: FloatingPoint&PythonConvertible>(_ tensor: Tensor<T>) -> PythonObject {
     return np.array(tensor.scalars).reshape(tensor.shape)
 }
 
@@ -48,10 +48,12 @@ extension Date {
 
 extension SummaryWriter {
     /// Add scalar to summary.
-    public func addScalar(tag: String,
-                          scalar: Float,
-                          globalStep: Int? = nil,
-                          date: Date? = nil) {
+    public func addScalar<T: FloatingPoint&PythonConvertible>(
+        tag: String,
+        scalar: T,
+        globalStep: Int? = nil,
+        date: Date? = nil
+    ) {
         writer.add_scalar(tag: tag,
                           scalar_value: scalar,
                           global_step: globalStep,
@@ -59,10 +61,12 @@ extension SummaryWriter {
     }
     
     /// Add scalars to summary.
-    public func addScalars(mainTag: String,
-                           taggedScalars: [String: Float],
-                           globalStep: Int? = nil,
-                           date: Date? = nil) {
+    public func addScalars<T: FloatingPoint&PythonConvertible>(
+        mainTag: String,
+        taggedScalars: [String: T],
+        globalStep: Int? = nil,
+        date: Date? = nil
+    ) {
         writer.add_scalars(main_tag: mainTag,
                            tag_scalar_dict: taggedScalars,
                            global_step: globalStep,
@@ -73,11 +77,13 @@ extension SummaryWriter {
     /// - Parameters:
     ///   - image: Image tensor. Number of channels must be 1, 3, or 4. Pixel values must be in [0, 1] range.
     ///   - dataformats: Specify where channels dimension is in `images` tensor dimensions.
-    public func addImage(tag: String,
-                         image: Tensor<Float>,
-                         globalStep: Int? = nil,
-                         date: Date? = nil,
-                         dataformats: ImageDataFormat = .channelsLast) {
+    public func addImage<T: FloatingPoint&PythonConvertible>(
+        tag: String,
+        image: Tensor<T>,
+        globalStep: Int? = nil,
+        date: Date? = nil,
+        dataformats: ImageDataFormat = .channelsLast
+    ) {
         precondition(image.shape.count == 3, "Invalid `images` shape.")
         switch dataformats {
         case .channelsFirst:
@@ -98,11 +104,13 @@ extension SummaryWriter {
     /// - Parameters:
     ///   - images: Tensor contains images. Number of channels must be 1, 3, or 4. Pixel values must be in [0, 1] range.
     ///   - dataformats: Specify where channels dimension is in `images` tensor dimensions.
-    public func addImages(tag: String,
-                          images: Tensor<Float>,
-                          globalStep: Int? = nil,
-                          date: Date? = nil,
-                          dataformats: ImageDataFormat = .channelsLast) {
+    public func addImages<T: FloatingPoint&PythonConvertible>(
+        tag: String,
+        images: Tensor<T>,
+        globalStep: Int? = nil,
+        date: Date? = nil,
+        dataformats: ImageDataFormat = .channelsLast
+    ) {
         precondition(images.shape.count == 4, "Invalid `images` shape.")
         precondition(images.shape[0] > 0, "`images` contains no images.")
         switch dataformats {
@@ -133,10 +141,12 @@ extension SummaryWriter {
     }
     
     /// Add histogram to summary.
-    public func addHistogram(tag: String,
-                             values: Tensor<Float>,
-                             globalStep: Int? = nil,
-                             date: Date? = nil) {
+    public func addHistogram<T: FloatingPoint&PythonConvertible>(
+        tag: String,
+        values: Tensor<T>,
+        globalStep: Int? = nil,
+        date: Date? = nil
+    ) {
         writer.add_histogram(tag: tag,
                              values: nparray(values),
                              global_step: globalStep,
@@ -147,10 +157,12 @@ extension SummaryWriter {
     /// - Parameters:
     ///   - matrix: N x D matrix, N features of D dimension.
     ///   - labels: Labels for each sample.
-    public func addEmbedding(tag: String = "default",
-                             matrix: Tensor<Float>,
-                             labels: [String],
-                             globalStep: Int? = nil) {
+    public func addEmbedding<T: FloatingPoint&PythonConvertible>(
+        tag: String = "default",
+        matrix: Tensor<T>,
+        labels: [String],
+        globalStep: Int? = nil
+    ) {
         writer.add_embedding(mat: nparray(matrix),
                              metadata: labels,
                              global_step: globalStep,
@@ -162,11 +174,13 @@ extension SummaryWriter {
     ///   - matrix: N x D matrix, N features of D dimension.
     ///   - labels: Labels for each sample.
     // Currently unavailable since label_img is PyTorch tensor only.
-    private func addEmbedding(tag: String = "default",
-                             matrix: Tensor<Float>,
-                             labels: [String],
-                             labelImages: Tensor<Float>,
-                             globalStep: Int? = nil) {
+    private func addEmbedding<T: FloatingPoint&PythonConvertible>(
+        tag: String = "default",
+        matrix: Tensor<T>,
+        labels: [String],
+        labelImages: Tensor<T>,
+        globalStep: Int? = nil
+    ) {
         writer.add_embedding(mat: nparray(matrix),
                              metadata: labels,
                              label_img: nparray(labelImages),
