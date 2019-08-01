@@ -10,7 +10,7 @@
 - Python libraries
 
 ```bash
-$ pip install tensorboard tensorboardX Pillow
+$ pip install tensorboard tensorboardX numpy Pillow
 ```
 
 To verify installation, clone this repository and run the commands below.
@@ -25,7 +25,7 @@ $ tensorboard --logdir /tmp/tensorboardx
 Add this to package's dependencies.
 
 ```
-.package(url: "https://github.com/t-ae/tensorboardx-s4tf.git", from: "0.0.2"),
+.package(url: "https://github.com/t-ae/tensorboardx-s4tf.git", from: "0.0.3"),
 ```
 
 And add `"TensorBoardX"` for target's dependencies.
