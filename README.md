@@ -29,3 +29,6 @@ Add this to package's dependencies.
 ```
 
 And add `"TensorBoardX"` for target's dependencies.
+
+## Example
+[Sources/TestPlot/main.swift](https://github.com/t-ae/tensorboardx-s4tf/blob/master/Sources/TestPlot/main.swift)
