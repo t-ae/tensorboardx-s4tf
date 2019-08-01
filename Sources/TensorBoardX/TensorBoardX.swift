@@ -27,16 +27,28 @@ public class SummaryWriter {
     public init(logdir: String, flushSecs: Int = 120) {
         self.writer = tbx.SummaryWriter(logdir, flush_secs: flushSecs)
     }
+    
+    /// Flush.
+    public func flush() {
+        writer.flush()
+    }
+    
+    /// Close.
+    public func close() {
+        writer.close()
+    }
 }
 
 extension SummaryWriter {
     /// Add scalar to summary.
-    public func addScalar(tag: String, scalar: Float, globalStep: Int) {
+    public func addScalar(tag: String, scalar: Float, globalStep: Int? = nil) {
         writer.add_scalar(tag, scalar, globalStep)
     }
     
     /// Add scalars to summary.
-    public func addScalars(mainTag: String, taggedScalars: [String: Float], globalStep: Int) {
+    public func addScalars(mainTag: String,
+                           taggedScalars: [String: Float],
+                           globalStep: Int? = nil) {
         writer.add_scalars(mainTag, taggedScalars, globalStep)
     }
     
@@ -46,7 +58,7 @@ extension SummaryWriter {
     ///   - dataformats: Specify where channels dimension is in `images` tensor dimensions.
     public func addImage(tag: String,
                          image: Tensor<Float>,
-                         globalStep: Int,
+                         globalStep: Int? = nil,
                          dataformats: ImageDataFormat = .channelsLast) {
         writer.add_image(tag, nparray(image), globalStep, dataformats: dataformats.stringValue)
     }
@@ -57,19 +69,19 @@ extension SummaryWriter {
     ///   - dataformats: Specify where channels dimension is in `images` tensor dimensions.
     public func addImages(tag: String,
                           images: Tensor<Float>,
-                          globalStep: Int,
+                          globalStep: Int? = nil,
                           dataformats: ImageDataFormat = .channelsLast) {
         let dataformats = "N" + dataformats.stringValue
         writer.add_images(tag, nparray(images), globalStep, dataformats: dataformats)
     }
     
     /// Add text to summary.
-    public func addText(tag: String, text: String, globalStep: Int) {
+    public func addText(tag: String, text: String, globalStep: Int? = nil) {
         writer.add_text(tag, text, globalStep)
     }
     
     /// Add histogram to summary.
-    public func addHistogram(tag: String, values: Tensor<Float>, globalStep: Int) {
+    public func addHistogram(tag: String, values: Tensor<Float>, globalStep: Int? = nil) {
         writer.add_histogram(tag, nparray(values), globalStep)
     }
     
@@ -80,7 +92,7 @@ extension SummaryWriter {
     public func addEmbedding(tag: String = "default",
                              matrix: Tensor<Float>,
                              labels: [String],
-                             globalStep: Int) {
+                             globalStep: Int? = nil) {
         writer.add_embedding(mat: nparray(matrix),
                              metadata: labels,
                              global_step: globalStep,
@@ -96,21 +108,11 @@ extension SummaryWriter {
                              matrix: Tensor<Float>,
                              labels: [String],
                              labelImages: Tensor<Float>,
-                             globalStep: Int) {
+                             globalStep: Int? = nil) {
         writer.add_embedding(mat: nparray(matrix),
                              metadata: labels,
                              label_img: nparray(labelImages),
                              global_step: globalStep,
                              tag: tag)
-    }
-    
-    /// Flush.
-    public func flush() {
-        writer.flush()
-    }
-    
-    /// Close.
-    public func close() {
-        writer.close()
     }
 }
