@@ -80,9 +80,9 @@ extension SummaryWriter {
     public func addImage<T: FloatingPoint&PythonConvertible>(
         tag: String,
         image: Tensor<T>,
+        dataformats: ImageDataFormat = .channelsLast,
         globalStep: Int? = nil,
-        date: Date? = nil,
-        dataformats: ImageDataFormat = .channelsLast
+        date: Date? = nil
     ) {
         precondition(image.shape.count == 3, "Invalid `images` shape.")
         switch dataformats {
@@ -107,9 +107,9 @@ extension SummaryWriter {
     public func addImages<T: FloatingPoint&PythonConvertible>(
         tag: String,
         images: Tensor<T>,
+        dataformats: ImageDataFormat = .channelsLast,
         globalStep: Int? = nil,
-        date: Date? = nil,
-        dataformats: ImageDataFormat = .channelsLast
+        date: Date? = nil
     ) {
         precondition(images.shape.count == 4, "Invalid `images` shape.")
         precondition(images.shape[0] > 0, "`images` contains no images.")
