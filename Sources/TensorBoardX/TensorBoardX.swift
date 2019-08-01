@@ -36,11 +36,14 @@ extension SummaryWriter {
     }
     
     /// Add scalars to summary.
-    public func addScalars(tag: String, scalars: [String: Float], globalStep: Int) {
-        writer.add_scalars(tag, scalars, globalStep)
+    public func addScalars(mainTag: String, taggedScalars: [String: Float], globalStep: Int) {
+        writer.add_scalars(mainTag, taggedScalars, globalStep)
     }
     
     /// Add image to summary.
+    /// - Parameters:
+    ///   - image: Image tensor. Number of channels must be 1, 3, or 4. Pixel values must be in [0, 1] range.
+    ///   - dataformats: Specify where channels dimension is in `images` tensor dimensions.
     public func addImage(tag: String,
                          image: Tensor<Float>,
                          globalStep: Int,
@@ -49,6 +52,9 @@ extension SummaryWriter {
     }
     
     /// Add images to summary
+    /// - Parameters:
+    ///   - images: Tensor contains images. Number of channels must be 1, 3, or 4. Pixel values must be in [0, 1] range.
+    ///   - dataformats: Specify where channels dimension is in `images` tensor dimensions.
     public func addImages(tag: String,
                           images: Tensor<Float>,
                           globalStep: Int,

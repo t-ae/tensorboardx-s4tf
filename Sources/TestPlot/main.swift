@@ -13,7 +13,7 @@ for i in 0..<100 {
 for i in 0..<100 {
     let sin = sinf(Float(i) / 30)
     let cos = cosf(Float(i) / 30)
-    writer.addScalars(tag: "scalar/scalars", scalars: ["sin": sin, "cos": cos], globalStep: i)
+    writer.addScalars(mainTag: "scalar/scalars", taggedScalars: ["sin": sin, "cos": cos], globalStep: i)
 }
 
 for i in 0..<3 {
