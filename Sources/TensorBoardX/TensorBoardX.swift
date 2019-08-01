@@ -60,6 +60,15 @@ extension SummaryWriter {
                          image: Tensor<Float>,
                          globalStep: Int? = nil,
                          dataformats: ImageDataFormat = .channelsLast) {
+        precondition(image.shape.count == 3, "Invalid `images` shape.")
+        switch dataformats {
+        case .channelsFirst:
+            precondition([0, 3, 4].contains(image.shape[0]), "Invalid `image` shape.")
+            precondition(image.shape[1] > 0 && image.shape[2] > 0, "Invalid `image` shape.")
+        case .channelsLast:
+            precondition([0, 3, 4].contains(image.shape[2]), "Invalid `image` shape.")
+            precondition(image.shape[0] > 0 && image.shape[1] > 0, "Invalid `image` shape.")
+        }
         writer.add_image(tag, nparray(image), globalStep, dataformats: dataformats.stringValue)
     }
     
@@ -71,6 +80,16 @@ extension SummaryWriter {
                           images: Tensor<Float>,
                           globalStep: Int? = nil,
                           dataformats: ImageDataFormat = .channelsLast) {
+        precondition(images.shape.count == 4, "Invalid `images` shape.")
+        precondition(images.shape[0] > 0, "`images` contains no images.")
+        switch dataformats {
+        case .channelsFirst:
+            precondition([0, 3, 4].contains(images.shape[1]), "Invalid `images` shape.")
+            precondition(images.shape[2] > 0 && images.shape[3] > 0, "Invalid `image` shape.")
+        case .channelsLast:
+            precondition([0, 3, 4].contains(images.shape[3]), "Invalid `images` shape.")
+            precondition(images.shape[1] > 0 && images.shape[2] > 0, "Invalid `image` shape.")
+        }
         let dataformats = "N" + dataformats.stringValue
         writer.add_images(tag, nparray(images), globalStep, dataformats: dataformats)
     }
