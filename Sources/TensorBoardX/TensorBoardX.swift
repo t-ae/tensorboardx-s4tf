@@ -8,6 +8,19 @@ func nparray(_ tensor: Tensor<Float>) -> PythonObject {
     return np.array(tensor.scalars).reshape(tensor.shape)
 }
 
+public enum ImageDataFormat {
+    case channelsFirst, channelsLast
+    
+    var stringValue: String {
+        switch self {
+        case .channelsFirst:
+            return "CHW"
+        case .channelsLast:
+            return "HWC"
+        }
+    }
+}
+
 public class SummaryWriter {
     var writer: PythonObject
     
@@ -31,15 +44,16 @@ extension SummaryWriter {
     public func addImage(tag: String,
                          image: Tensor<Float>,
                          globalStep: Int,
-                         dataformats: String = "HWC") {
-        writer.add_image(tag, nparray(image), globalStep, dataformats: dataformats)
+                         dataformats: ImageDataFormat = .channelsLast) {
+        writer.add_image(tag, nparray(image), globalStep, dataformats: dataformats.stringValue)
     }
     
     /// Add images to summary
     public func addImages(tag: String,
                           images: Tensor<Float>,
                           globalStep: Int,
-                          dataformats: String = "NHWC") {
+                          dataformats: ImageDataFormat = .channelsLast) {
+        let dataformats = "N" + dataformats.stringValue
         writer.add_images(tag, nparray(images), globalStep, dataformats: dataformats)
     }
     
