@@ -173,7 +173,6 @@ extension SummaryWriter {
     /// - Parameters:
     ///   - matrix: N x D matrix, N features of D dimension.
     ///   - labels: Labels for each sample.
-    // Currently unavailable since label_img is PyTorch tensor only.
     private func addEmbedding<T: FloatingPoint&PythonConvertible>(
         tag: String = "default",
         matrix: Tensor<T>,
