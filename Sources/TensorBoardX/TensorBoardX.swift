@@ -38,6 +38,10 @@ public class SummaryWriter {
     public func close() {
         writer.close()
     }
+    
+    deinit {
+        close()
+    }
 }
 
 extension Date {

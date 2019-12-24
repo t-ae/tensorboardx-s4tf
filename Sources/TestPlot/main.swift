@@ -42,5 +42,3 @@ let labels = (0..<100).map { _ in String(Int.random(in: 0..<10)) }
 //let labelImages = Tensor<Float>(randomNormal: [100, 3, 32, 32])
 
 writer.addEmbedding(tag: "embed", matrix: data, labels: labels)
-
-writer.close()
