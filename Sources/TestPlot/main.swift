@@ -52,9 +52,10 @@ try writer.addJSONText(tag: "json", encodable: obj)
 // MARK: - Add embeddings
 let data = Tensor<Double>(randomNormal: [100, 10])
 let labels = (0..<100).map { _ in String(Int.random(in: 0..<10)) }
-//let labelImages = Tensor<Float>(randomNormal: [100, 3, 32, 32])
+let labelImages = Tensor<Double>(randomNormal: [100, 3, 32, 32])
 
 writer.addEmbedding(tag: "embed", matrix: data, labels: labels)
+writer.addEmbedding(tag: "embed_image", matrix: data, labels: labels, labelImages: labelImages)
 
 // MARK: - Add histograms to draw histograms/distributions
 for i in 0..<3 {

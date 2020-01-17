@@ -235,7 +235,7 @@ extension SummaryWriter {
     /// - Parameters:
     ///   - matrix: N x D matrix, N features of D dimension.
     ///   - labels: Labels for each sample.
-    private func addEmbedding<T: FloatingPoint&PythonConvertible>(
+    public func addEmbedding<T: FloatingPoint&PythonConvertible>(
         tag: String = "default",
         matrix: Tensor<T>,
         labels: [String],
