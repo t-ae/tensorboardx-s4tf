@@ -186,11 +186,17 @@ extension SummaryWriter {
     /// Add json text to summary.
     /// - Parameters:
     ///   - encoder: `JSONEncoder` to use. Default is prettyPrinted enabled.
-    public func addJSONText<T: Encodable>(tag: String,
-                                          encodable: T,
-                                          globalStep: Int? = nil,
-                                          date: Date? = nil,
-                                          encoder: JSONEncoder = { let encoder = JSONEncoder(); encoder.outputFormatting = .prettyPrinted; return encoder }()) throws {
+    public func addJSONText<T: Encodable>(
+        tag: String,
+        encodable: T,
+        globalStep: Int? = nil,
+        date: Date? = nil,
+        encoder: JSONEncoder = {
+            let encoder = JSONEncoder()
+            encoder.outputFormatting = .prettyPrinted
+            return encoder
+        }()
+    ) throws {
         var text = try String(data: encoder.encode(encodable), encoding: .utf8)!
         text = text.replacingOccurrences(of: " ", with: "&nbsp;")
         addText(tag: tag, text: text, globalStep: globalStep, date: date)
