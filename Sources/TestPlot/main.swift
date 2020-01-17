@@ -21,13 +21,14 @@ for i in 0..<100 {
 
 // MARK: - Add images
 for i in 0..<3 {
-    let image = Tensor<Double>(randomUniform: [128, 128, 3])
+    let image = Tensor<Double>(randomUniform: [32, 32, 3])
     writer.addImage(tag: "image", image: image, globalStep: i)
 }
 
 for i in 0..<3 {
-    let images = Tensor<Float>(randomUniform: [5, 128, 128, 1])
+    let images = Tensor<Float>(randomUniform: [20, 32, 32, 1])
     writer.addImages(tag: "images", images: images, globalStep: i)
+    writer.addImages(tag: "images_as_grid", images: images, colSize: 9, globalStep: i)
 }
 
 // MARK: - Add texts

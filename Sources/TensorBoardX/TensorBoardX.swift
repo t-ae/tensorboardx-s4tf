@@ -88,7 +88,7 @@ extension SummaryWriter {
         globalStep: Int? = nil,
         date: Date? = nil
     ) {
-        precondition(image.shape.count == 3, "Invalid `images` shape.")
+        precondition(image.rank == 3, "Invalid `images` rank.")
         switch dataformats {
         case .channelsFirst:
             precondition([1, 3, 4].contains(image.shape[0]), "Invalid `image` shape.")
@@ -104,7 +104,7 @@ extension SummaryWriter {
                          dataformats: dataformats.stringValue)
     }
     
-    /// Add images to summary
+    /// Add images to summary.
     /// - Parameters:
     ///   - images: Tensor contains images. Number of channels must be 1, 3, or 4. Pixel values must be in [0, 1] range.
     ///   - dataformats: Specify where channels dimension is in `images` tensor dimensions.
@@ -115,7 +115,7 @@ extension SummaryWriter {
         globalStep: Int? = nil,
         date: Date? = nil
     ) {
-        precondition(images.shape.count == 4, "Invalid `images` shape.")
+        precondition(images.rank == 4, "Invalid `images` rank.")
         precondition(images.shape[0] > 0, "`images` contains no images.")
         switch dataformats {
         case .channelsFirst:
@@ -131,6 +131,38 @@ extension SummaryWriter {
                           global_step: globalStep,
                           walltime: date?.walltime,
                           dataformats: dataformats)
+    }
+    
+    /// Add images as grid with specified `colsize` to summary.
+    /// - Parameters:
+    ///   - images: Tensor contains images. Number of channels must be 1, 3, or 4. Pixel values must be in [0, 1] range.
+    ///   - colsize: The number of images each row contains.
+    ///   - dataformats: Specify where channels dimension is in `images` tensor dimensions.
+    public func addImages<T: FloatingPoint&PythonConvertible>(
+        tag: String,
+        images: Tensor<T>,
+        colSize: Int,
+        dataformats: ImageDataFormat = .channelsLast,
+        globalStep: Int? = nil,
+        date: Date? = nil
+    ) {
+        precondition(images.rank == 4, "Invalid `images` rank.")
+        let (s1, s2, s3) = (images.shape[1], images.shape[2], images.shape[3])
+        let paddings = colSize - images.shape[0] % colSize
+        let padImages = Tensor<T>(zeros: [paddings, s1, s2, s3])
+        
+        var grid = Tensor(concatenating: [images, padImages], alongAxis: 0)
+        let rowSize = grid.shape[0] / colSize
+        grid = grid.reshaped(to: [rowSize, colSize, s1, s2, s3])
+        switch dataformats {
+        case .channelsFirst:
+            grid = grid.transposed(permutation: 0, 3, 1, 4, 2)
+            grid = grid.reshaped(to: [rowSize*s2, colSize*s3, s1])
+        case .channelsLast:
+            grid = grid.transposed(permutation: 0, 2, 1, 3, 4)
+            grid = grid.reshaped(to: [rowSize*s1, colSize*s2, s3])
+        }
+        addImage(tag: tag, image: grid, dataformats: dataformats)
     }
     
     /// Add text to summary.
