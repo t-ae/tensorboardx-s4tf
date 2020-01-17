@@ -147,12 +147,12 @@ extension SummaryWriter {
         date: Date? = nil
     ) {
         precondition(images.rank == 4, "Invalid `images` rank.")
-        let (s1, s2, s3) = (images.shape[1], images.shape[2], images.shape[3])
-        let paddings = colSize - images.shape[0] % colSize
+        let (batchSize, s1, s2, s3) = (images.shape[0], images.shape[1], images.shape[2], images.shape[3])
+        let rowSize = Int(ceil(Float(batchSize) / Float(colSize)))
+        let paddings = rowSize * colSize - batchSize
         let padImages = Tensor<T>(zeros: [paddings, s1, s2, s3])
         
         var grid = Tensor(concatenating: [images, padImages], alongAxis: 0)
-        let rowSize = grid.shape[0] / colSize
         grid = grid.reshaped(to: [rowSize, colSize, s1, s2, s3])
         switch dataformats {
         case .channelsFirst:

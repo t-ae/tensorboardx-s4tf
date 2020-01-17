@@ -28,7 +28,8 @@ for i in 0..<3 {
 for i in 0..<3 {
     let images = Tensor<Float>(randomUniform: [20, 32, 32, 1])
     writer.addImages(tag: "images", images: images, globalStep: i)
-    writer.addImages(tag: "images_as_grid", images: images, colSize: 9, globalStep: i)
+    writer.addImages(tag: "images_as_grid9", images: images, colSize: 9, globalStep: i)
+    writer.addImages(tag: "images_as_grid10", images: images, colSize: 10, globalStep: i)
 }
 
 // MARK: - Add texts
