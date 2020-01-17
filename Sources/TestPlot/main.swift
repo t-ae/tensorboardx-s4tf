@@ -36,6 +36,11 @@ for i in 0..<3 {
 for i in 0..<3 {
     writer.addText(tag: "text", text: "step: \(i)", globalStep: i)
 }
+writer.addText(tag: "text_with_newlines", text: """
+text
+with
+newlines
+""")
 
 let data = Tensor<Double>(randomNormal: [100, 10])
 let labels = (0..<100).map { _ in String(Int.random(in: 0..<10)) }

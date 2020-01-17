@@ -134,10 +134,17 @@ extension SummaryWriter {
     }
     
     /// Add text to summary.
+    /// - Parameters:
+    ///   - convertToMarkDownFormat: If true, newlines in text will be converted to "  \n".
     public func addText(tag: String,
                         text: String,
                         globalStep: Int? = nil,
-                        date: Date? = nil) {
+                        date: Date? = nil,
+                        convertToMarkdownFormat: Bool = true) {
+        var text = text
+        if convertToMarkdownFormat {
+            text = text.replacingOccurrences(of: "\n", with: "  \n")
+        }
         writer.add_text(tag: tag,
                         text_string: text,
                         global_step: globalStep,
