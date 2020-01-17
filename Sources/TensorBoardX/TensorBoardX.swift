@@ -162,7 +162,7 @@ extension SummaryWriter {
             grid = grid.transposed(permutation: 0, 2, 1, 3, 4)
             grid = grid.reshaped(to: [rowSize*s1, colSize*s2, s3])
         }
-        addImage(tag: tag, image: grid, dataformats: dataformats)
+        addImage(tag: tag, image: grid, dataformats: dataformats, globalStep: globalStep, date: date)
     }
     
     /// Add text to summary.
