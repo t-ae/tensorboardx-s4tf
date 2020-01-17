@@ -40,6 +40,7 @@ extension Conv3D: HistogramWritable where Scalar: FloatingPoint&PythonConvertibl
     }
 }
 
+// TODO: Not yet available in the latest release v0.6.0.
 //extension TransposedConv1D: HistogramWritable where Scalar: FloatingPoint&PythonConvertible {
 //    public func writeHistograms(tag: String, writer: SummaryWriter, globalStep: Int? = nil) {
 //        writer.addHistogram(tag: "\(tag).filter", values: filter, globalStep: globalStep)
@@ -54,6 +55,7 @@ extension TransposedConv2D: HistogramWritable where Scalar: FloatingPoint&Python
     }
 }
 
+// TODO: Not yet available in the latest release v0.6.0.
 //extension TransposedConv3D: HistogramWritable where Scalar: FloatingPoint&PythonConvertible {
 //    public func writeHistograms(tag: String, writer: SummaryWriter, globalStep: Int? = nil) {
 //        writer.addHistogram(tag: "\(tag).filter", values: filter, globalStep: globalStep)
