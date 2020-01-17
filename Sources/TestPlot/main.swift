@@ -26,7 +26,7 @@ for i in 0..<3 {
 }
 
 for i in 0..<3 {
-    let images = Tensor<Float>(randomUniform: [5, 128, 128, 3])
+    let images = Tensor<Float>(randomUniform: [5, 128, 128, 1])
     writer.addImages(tag: "images", images: images, globalStep: i)
 }
 

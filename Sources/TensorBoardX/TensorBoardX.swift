@@ -91,10 +91,10 @@ extension SummaryWriter {
         precondition(image.shape.count == 3, "Invalid `images` shape.")
         switch dataformats {
         case .channelsFirst:
-            precondition([0, 3, 4].contains(image.shape[0]), "Invalid `image` shape.")
+            precondition([1, 3, 4].contains(image.shape[0]), "Invalid `image` shape.")
             precondition(image.shape[1] > 0 && image.shape[2] > 0, "Invalid `image` shape.")
         case .channelsLast:
-            precondition([0, 3, 4].contains(image.shape[2]), "Invalid `image` shape.")
+            precondition([1, 3, 4].contains(image.shape[2]), "Invalid `image` shape.")
             precondition(image.shape[0] > 0 && image.shape[1] > 0, "Invalid `image` shape.")
         }
         writer.add_image(tag: tag,
@@ -119,10 +119,10 @@ extension SummaryWriter {
         precondition(images.shape[0] > 0, "`images` contains no images.")
         switch dataformats {
         case .channelsFirst:
-            precondition([0, 3, 4].contains(images.shape[1]), "Invalid `images` shape.")
+            precondition([1, 3, 4].contains(images.shape[1]), "Invalid `images` shape.")
             precondition(images.shape[2] > 0 && images.shape[3] > 0, "Invalid `image` shape.")
         case .channelsLast:
-            precondition([0, 3, 4].contains(images.shape[3]), "Invalid `images` shape.")
+            precondition([1, 3, 4].contains(images.shape[3]), "Invalid `images` shape.")
             precondition(images.shape[1] > 0 && images.shape[2] > 0, "Invalid `image` shape.")
         }
         let dataformats = "N" + dataformats.stringValue
