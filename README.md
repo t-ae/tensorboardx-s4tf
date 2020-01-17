@@ -25,7 +25,7 @@ $ tensorboard --logdir /tmp/tensorboardx
 Add this to package's dependencies.
 
 ```
-.package(url: "https://github.com/t-ae/tensorboardx-s4tf.git", from: "0.0.4"),
+.package(url: "https://github.com/t-ae/tensorboardx-s4tf.git", from: "0.0.8"),
 ```
 
 And add `"TensorBoardX"` for target's dependencies.
