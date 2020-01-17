@@ -42,6 +42,13 @@ with
 newlines
 """)
 
+struct Obj: Encodable {
+    var int: Int
+    var text: String
+}
+let obj = Obj(int: 42, text: "hoge")
+try writer.addJSONText(tag: "json", encodable: obj)
+
 let data = Tensor<Double>(randomNormal: [100, 10])
 let labels = (0..<100).map { _ in String(Int.random(in: 0..<10)) }
 //let labelImages = Tensor<Float>(randomNormal: [100, 3, 32, 32])
