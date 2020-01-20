@@ -78,6 +78,7 @@ extension SummaryWriter {
     }
     
     /// Add image to summary.
+    ///
     /// - Parameters:
     ///   - image: Image tensor. Number of channels must be 1, 3, or 4. Pixel values must be in [0, 1] range.
     ///   - dataformats: Specify where channels dimension is in `images` tensor dimensions.
@@ -105,6 +106,7 @@ extension SummaryWriter {
     }
     
     /// Add images to summary.
+    ///
     /// - Parameters:
     ///   - images: Tensor contains images. Number of channels must be 1, 3, or 4. Pixel values must be in [0, 1] range.
     ///   - dataformats: Specify where channels dimension is in `images` tensor dimensions.
@@ -134,6 +136,7 @@ extension SummaryWriter {
     }
     
     /// Add images as grid with specified `colsize` to summary.
+    ///
     /// - Parameters:
     ///   - images: Tensor contains images. Number of channels must be 1, 3, or 4. Pixel values must be in [0, 1] range.
     ///   - colsize: The number of images each row contains.
@@ -166,17 +169,10 @@ extension SummaryWriter {
     }
     
     /// Add text to summary.
-    /// - Parameters:
-    ///   - convertToMarkDownFormat: If true, newlines in text will be converted to "  \n".
     public func addText(tag: String,
                         text: String,
                         globalStep: Int? = nil,
-                        date: Date? = nil,
-                        convertToMarkdownFormat: Bool = true) {
-        var text = text
-        if convertToMarkdownFormat {
-            text = text.replacingOccurrences(of: "\n", with: "  \n")
-        }
+                        date: Date? = nil) {
         writer.add_text(tag: tag,
                         text_string: text,
                         global_step: globalStep,
@@ -184,6 +180,7 @@ extension SummaryWriter {
     }
     
     /// Add json text to summary.
+    ///
     /// - Parameters:
     ///   - encoder: `JSONEncoder` to use. Default is prettyPrinted enabled.
     public func addJSONText<T: Encodable>(
@@ -197,8 +194,12 @@ extension SummaryWriter {
             return encoder
         }()
     ) throws {
-        var text = try String(data: encoder.encode(encodable), encoding: .utf8)!
-        text = text.replacingOccurrences(of: " ", with: "&nbsp;")
+        let encoded = try String(data: encoder.encode(encodable), encoding: .utf8)!
+        let text = """
+        <pre>
+        \(encoded)
+        </pre>
+        """
         addText(tag: tag, text: text, globalStep: globalStep, date: date)
     }
     
@@ -216,6 +217,7 @@ extension SummaryWriter {
     }
     
     /// Add embedding.
+    ///
     /// - Parameters:
     ///   - matrix: N x D matrix, N features of D dimension.
     ///   - labels: Labels for each sample.
@@ -232,6 +234,7 @@ extension SummaryWriter {
     }
     
     /// Add embedding.
+    /// 
     /// - Parameters:
     ///   - matrix: N x D matrix, N features of D dimension.
     ///   - labels: Labels for each sample.
