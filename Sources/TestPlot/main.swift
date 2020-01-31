@@ -66,6 +66,6 @@ for i in 0..<3 {
 
 // If your model conforms to `HistogramWritable`, `addHistograms(tag: layer:)` is available.
 let conv = Conv2D<Float>(filterShape: (3, 3, 32, 64))
-writer.addHistograms(tag: "conv", layer: conv)
+writer.addHistograms(tag: "conv", model: conv)
 
 writer.flush()

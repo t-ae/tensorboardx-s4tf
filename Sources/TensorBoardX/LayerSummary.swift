@@ -7,8 +7,12 @@ public protocol HistogramWritable {
 }
 
 extension SummaryWriter {
-    public func addHistograms<L: HistogramWritable>(tag: String, layer: L, globalStep: Int? = nil) {
-        layer.writeHistograms(tag: tag, writer: self, globalStep: globalStep)
+    public func addHistograms<Model: HistogramWritable>(
+        tag: String,
+        model: Model,
+        globalStep: Int? = nil
+    ) {
+        model.writeHistograms(tag: tag, writer: self, globalStep: globalStep)
     }
 }
 
