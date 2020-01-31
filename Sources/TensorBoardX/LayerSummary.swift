@@ -13,28 +13,28 @@ extension SummaryWriter {
 }
 
 extension Dense: HistogramWritable where Scalar: FloatingPoint&PythonConvertible {
-    public func writeHistograms(tag: String, writer: SummaryWriter, globalStep: Int? = nil) {
+    public func writeHistograms(tag: String, writer: SummaryWriter, globalStep: Int?) {
         writer.addHistogram(tag: "\(tag).weight", values: weight, globalStep: globalStep)
         writer.addHistogram(tag: "\(tag).bias", values: bias, globalStep: globalStep)
     }
 }
 
 extension Conv1D: HistogramWritable where Scalar: FloatingPoint&PythonConvertible {
-    public func writeHistograms(tag: String, writer: SummaryWriter, globalStep: Int? = nil) {
+    public func writeHistograms(tag: String, writer: SummaryWriter, globalStep: Int?) {
         writer.addHistogram(tag: "\(tag).filter", values: filter, globalStep: globalStep)
         writer.addHistogram(tag: "\(tag).bias", values: bias, globalStep: globalStep)
     }
 }
 
 extension Conv2D: HistogramWritable where Scalar: FloatingPoint&PythonConvertible {
-    public func writeHistograms(tag: String, writer: SummaryWriter, globalStep: Int? = nil) {
+    public func writeHistograms(tag: String, writer: SummaryWriter, globalStep: Int?) {
         writer.addHistogram(tag: "\(tag).filter", values: filter, globalStep: globalStep)
         writer.addHistogram(tag: "\(tag).bias", values: bias, globalStep: globalStep)
     }
 }
 
 extension Conv3D: HistogramWritable where Scalar: FloatingPoint&PythonConvertible {
-    public func writeHistograms(tag: String, writer: SummaryWriter, globalStep: Int? = nil) {
+    public func writeHistograms(tag: String, writer: SummaryWriter, globalStep: Int?) {
         writer.addHistogram(tag: "\(tag).filter", values: filter, globalStep: globalStep)
         writer.addHistogram(tag: "\(tag).bias", values: bias, globalStep: globalStep)
     }
@@ -42,14 +42,14 @@ extension Conv3D: HistogramWritable where Scalar: FloatingPoint&PythonConvertibl
 
 // TODO: Not yet available in the latest release v0.6.0.
 //extension TransposedConv1D: HistogramWritable where Scalar: FloatingPoint&PythonConvertible {
-//    public func writeHistograms(tag: String, writer: SummaryWriter, globalStep: Int? = nil) {
+//    public func writeHistograms(tag: String, writer: SummaryWriter, globalStep: Int?) {
 //        writer.addHistogram(tag: "\(tag).filter", values: filter, globalStep: globalStep)
 //        writer.addHistogram(tag: "\(tag).bias", values: bias, globalStep: globalStep)
 //    }
 //}
 
 extension TransposedConv2D: HistogramWritable where Scalar: FloatingPoint&PythonConvertible {
-    public func writeHistograms(tag: String, writer: SummaryWriter, globalStep: Int? = nil) {
+    public func writeHistograms(tag: String, writer: SummaryWriter, globalStep: Int?) {
         writer.addHistogram(tag: "\(tag).filter", values: filter, globalStep: globalStep)
         writer.addHistogram(tag: "\(tag).bias", values: bias, globalStep: globalStep)
     }
@@ -57,21 +57,21 @@ extension TransposedConv2D: HistogramWritable where Scalar: FloatingPoint&Python
 
 // TODO: Not yet available in the latest release v0.6.0.
 //extension TransposedConv3D: HistogramWritable where Scalar: FloatingPoint&PythonConvertible {
-//    public func writeHistograms(tag: String, writer: SummaryWriter, globalStep: Int? = nil) {
+//    public func writeHistograms(tag: String, writer: SummaryWriter, globalStep: Int?) {
 //        writer.addHistogram(tag: "\(tag).filter", values: filter, globalStep: globalStep)
 //        writer.addHistogram(tag: "\(tag).bias", values: bias, globalStep: globalStep)
 //    }
 //}
 
 extension DepthwiseConv2D: HistogramWritable where Scalar: FloatingPoint&PythonConvertible {
-    public func writeHistograms(tag: String, writer: SummaryWriter, globalStep: Int? = nil) {
+    public func writeHistograms(tag: String, writer: SummaryWriter, globalStep: Int?) {
         writer.addHistogram(tag: "\(tag).filter", values: filter, globalStep: globalStep)
         writer.addHistogram(tag: "\(tag).bias", values: bias, globalStep: globalStep)
     }
 }
 
 extension SeparableConv1D: HistogramWritable where Scalar: FloatingPoint&PythonConvertible {
-    public func writeHistograms(tag: String, writer: SummaryWriter, globalStep: Int? = nil) {
+    public func writeHistograms(tag: String, writer: SummaryWriter, globalStep: Int?) {
         writer.addHistogram(tag: "\(tag).depthwiseFilter", values: depthwiseFilter, globalStep: globalStep)
         writer.addHistogram(tag: "\(tag).pointwiseFilter", values: pointwiseFilter, globalStep: globalStep)
         writer.addHistogram(tag: "\(tag).bias", values: bias, globalStep: globalStep)
@@ -79,7 +79,7 @@ extension SeparableConv1D: HistogramWritable where Scalar: FloatingPoint&PythonC
 }
 
 extension SeparableConv2D: HistogramWritable where Scalar: FloatingPoint&PythonConvertible {
-    public func writeHistograms(tag: String, writer: SummaryWriter, globalStep: Int? = nil) {
+    public func writeHistograms(tag: String, writer: SummaryWriter, globalStep: Int?) {
         writer.addHistogram(tag: "\(tag).depthwiseFilter", values: depthwiseFilter, globalStep: globalStep)
         writer.addHistogram(tag: "\(tag).pointwiseFilter", values: pointwiseFilter, globalStep: globalStep)
         writer.addHistogram(tag: "\(tag).bias", values: bias, globalStep: globalStep)
