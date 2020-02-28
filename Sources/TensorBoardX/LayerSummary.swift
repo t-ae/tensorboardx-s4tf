@@ -1,6 +1,11 @@
 import Foundation
 import TensorFlow
+
+#if canImport(PythonKit)
+import PythonKit
+#else
 import Python
+#endif
 
 public protocol HistogramWritable {
     func writeHistograms(tag: String, writer: SummaryWriter, globalStep: Int?)

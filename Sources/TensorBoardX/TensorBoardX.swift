@@ -1,6 +1,11 @@
 import Foundation
 import TensorFlow
+
+#if canImport(PythonKit)
+import PythonKit
+#else
 import Python
+#endif
 
 let np = Python.import("numpy")
 let tbx = Python.import("tensorboardX")
